@@ -23,5 +23,5 @@ Now you can work out angles from base of cameras to centre's of those objects. A
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/stereoDepthMaths.png?raw=true)
 
 ## Technicalities
-- To account for multiple of same object, pairs of the same object will be decided based on height of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
+- To account for multiple of same object, pairs of the same object will be decided based on similarity of height of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
 - When an object is detected in the extreme right of right camera (which we will use as our base image), it is provable the object, in the left camera, must be to the right of the vertical center line.
