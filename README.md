@@ -22,4 +22,5 @@ Now you can work out angles from base of cameras to centre's of those objects. A
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/stereoDepthMaths.png?raw=true)
 
-
+## Technicalities
+- To account for multiple of same object, pairs of the same object will be decided based on height of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
