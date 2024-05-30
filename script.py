@@ -9,4 +9,8 @@ def split_camera_feed(img):
     pass
 
 
+if __name__ == '__main__':
+    pass
+
+
 
