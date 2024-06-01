@@ -30,6 +30,7 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
 if __name__ == '__main__':
     cam = cv2.VideoCapture(1)
 
+
     cam.release()
     cv2.destroyAllWindows()
 
