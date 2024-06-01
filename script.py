@@ -27,6 +27,15 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
     pass
 
 
+def determine_depth(left_img, left_center_coords, right_img, right_center_coords):
+    """
+    determine_depths(), once it has paired up bounding boxes between left and right, will use this function to calculate
+    the depth for each individual object. I mainly included this function so others can copy-paste it if they want to do
+    depth calculations in separate projects, as its parameters aren't for a YOLO specific object.
+    """
+    pass
+
+
 if __name__ == '__main__':
     cam = cv2.VideoCapture(1)
 
