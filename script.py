@@ -1,12 +1,17 @@
 import torch
 import cv2
+import time
 
 
 def split_camera_feed(img):
     """
     As the camera feed combines both cameras images into one, this function will split it and return the individual images.
     """
-    pass
+    # shape assumes img is in h, w, c (default format of cv2 video capture frame)
+    shape = img.shape
+    width = shape[1]
+    half_width = int(width / 2)
+    return img[:, :half_width, :], img[:, half_width:, :]
 
 
 def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results):
@@ -19,7 +24,12 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
 
 
 if __name__ == '__main__':
-    pass
+    cam = cv2.VideoCapture(1)
+
+    
+
+    cam.release()
+    cv2.destroyAllWindows()
 
 
 
