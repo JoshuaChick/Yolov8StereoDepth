@@ -2,9 +2,12 @@ import torch
 import cv2
 import time
 from ultralytics import YOLO
+import sys
 
 
-model = YOLO("yolov8n.pt")
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+model = YOLO("yolov8x.pt").to(device)
+# model = torch.hub.load('ultralytics/yolov5', model='yolov5x', pretrained=True).to(device)
 # yolo outputs classes as numbers, this translates that to strings
 num_to_name = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane', 5: 'bus', 6: 'train', 7: 'truck', 8: 'boat', 9: 'traffic light', 10: 'fire hydrant', 11: 'stop sign', 12: 'parking meter', 13: 'bench', 14: 'bird', 15: 'cat', 16: 'dog', 17: 'horse', 18: 'sheep', 19: 'cow', 20: 'elephant', 21: 'bear', 22: 'zebra', 23: 'giraffe', 24: 'backpack', 25: 'umbrella', 26: 'handbag', 27: 'tie', 28: 'suitcase', 29: 'frisbee', 30: 'skis', 31: 'snowboard', 32: 'sports ball', 33: 'kite', 34: 'baseball bat', 35: 'baseball glove', 36: 'skateboard', 37: 'surfboard', 38: 'tennis racket', 39: 'bottle', 40: 'wine glass', 41: 'cup', 42: 'fork', 43: 'knife', 44: 'spoon', 45: 'bowl', 46: 'banana', 47: 'apple', 48: 'sandwich', 49: 'orange', 50: 'broccoli', 51: 'carrot', 52: 'hot dog', 53: 'pizza', 54: 'donut', 55: 'cake', 56: 'chair', 57: 'couch', 58: 'potted plant', 59: 'bed', 60: 'dining table', 61: 'toilet', 62: 'tv', 63: 'laptop', 64: 'mouse', 65: 'remote', 66: 'keyboard', 67: 'cell phone', 68: 'microwave', 69: 'oven', 70: 'toaster', 71: 'sink', 72: 'refrigerator', 73: 'book', 74: 'clock', 75: 'vase', 76: 'scissors', 77: 'teddy bear', 78: 'hair drier', 79: 'toothbrush'}
 name_to_num = {}
@@ -42,14 +45,34 @@ def determine_depth(left_img, left_center_coords, right_img, right_center_coords
 
 
 if __name__ == '__main__':
-    cam = cv2.VideoCapture(1)
+    # lower three lines set a custom video resolution, if you want cv2's default, uncomment first and comment out
+    # lower three
+    # cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cam.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
+    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
 
-    ret, frame = cam.read()
+    start = time.time()
+    while time.time() - start <= 20:
+        ret, frame = cam.read()
 
-    l, r = split_camera_feed(frame)
+        l, r = split_camera_feed(frame)
 
-    result = model(r)[0].boxes
-    print(result)
+        results = model(r)
+        boxes = results[0].boxes
+        for i, c in enumerate(boxes.cls):
+            xyxy = boxes.xyxy[i]
+
+            x_1 = int(xyxy[0])
+            y_1 = int(xyxy[1])
+            x_2 = int(xyxy[2])
+            y_2 = int(xyxy[3])
+
+            cv2.rectangle(r, (x_1, y_1), (x_2, y_2), (0, 255, 0), 2)
+            cv2.putText(r, num_to_name[int(c)], (x_1, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+
+        cv2.imshow('', r)
+        cv2.waitKey(1)
 
     cam.release()
     cv2.destroyAllWindows()
