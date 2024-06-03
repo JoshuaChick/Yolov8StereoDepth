@@ -1,3 +1,14 @@
+# Run
+Note: you must have the specified camera. If you don't you will need to edit the software yourself. Please install any necessary packages.
+```
+git clone https://github.com/JoshuaChick/Yolov8StereoDepth
+cd Yolov8StereoDepth
+python script.py
+```
+Will give you a live video with labels and depths.
+
+![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/yoloWithDepths.png?raw=true)
+
 # The Goal
 Get this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1) to do metric, stereo depth, on YOLOv8 output.
 
@@ -27,13 +38,3 @@ Now you can work out angles from base of cameras to centres of those objects. An
 - When an object is detected in the right of right camera (which we will use as our base image), it is provable the object, in the left camera, must be to the right of the vertical center line.
 - Depths of objects will be measured from right camera.
 
-# Run
-Note: you must have the specified camera. If you don't you will need to edit the software yourself. Please install any necessary packages.
-```
-git clone https://github.com/JoshuaChick/Yolov8StereoDepth
-cd Yolov8StereoDepth
-python script.py
-```
-Will give you a live video with labels and depths.
-
-![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/yoloWithDepths.png?raw=true)
