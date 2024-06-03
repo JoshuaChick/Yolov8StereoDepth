@@ -98,9 +98,6 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
             l_c_x = int((l_xyxy[0] + l_xyxy[2]) / 2)
             l_c_y = int((l_xyxy[1] + l_xyxy[3]) / 2)
 
-            if r_class_num == 0:
-                print(f'r({r_c_x}, {r_c_y}) l({l_c_x}, {l_c_y})')
-
             list_right_object_depths.append(
                 determine_depth(
                     left_img,
@@ -143,7 +140,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
     # if the angle is very small or negative, I will assume above angle measurements were slightly off and set it to 1
     if angle_at_obj < 0.1:
-        angle_at_obj = 0.1
+        return 'far away'
 
     # this angle is the los from the flat horizontal line passing through the middle of the right image (doesn't matter if positive or negative)
     angle_of_obj_btwn_horizon_los_r_cam = 0
@@ -160,9 +157,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     # x goes across camera, y goes up camera, z plane goes into camera. x z only means line to object w/o accounting for
     # drop or elevation (i.e., no y plane)
     # 1. object lies on vertical centre line of left camera
-    print(obj_centre_x_l)
     if obj_centre_x_l == centre_x_of_cam:
-        print(1)
         if obj_centre_x_r >= centre_x_of_cam:
             # this means that it was wrong object, you can do the geometry if you want
             return '-'
@@ -177,7 +172,6 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 2. object lies on v. centre line of right camera
     elif obj_centre_x_r == centre_x_of_cam:
-        print(2)
         if obj_centre_x_l <= centre_x_of_cam:
             # this means that it was wrong object, you can do the geometry if you want
             return '-'
@@ -191,7 +185,6 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 3. object lies between v. centres of left and right cameras
     elif obj_centre_x_r < centre_x_of_cam and obj_centre_x_l > centre_x_of_cam:
-        print(3)
         line_from_r_between_board_and_r_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_l_cam))
         x_z_only_line_from_right = line_from_r_between_board_and_r_los / if_zero_return_epsilon(math.sin(math.radians(angle_at_obj)))
         return x_z_only_line_from_right / if_zero_return_epsilon(math.cos(math.radians(angle_of_obj_btwn_horizon_los_r_cam)))
@@ -200,7 +193,6 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 4. object lies left of v. centre of left camera (and hence should be left of centre of right)
     elif obj_centre_x_l < centre_x_of_cam:
-        print(4)
         if obj_centre_x_r > centre_x_of_cam:
             return '-'
         line_from_l_between_board_and_l_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_r_cam))
@@ -213,7 +205,6 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 5. object lies right of v. centre of right camera (and hence should be right of centre of left)
     elif obj_centre_x_r > centre_x_of_cam:
-        print(5)
         if obj_centre_x_l < centre_x_of_cam:
             return '-'
         line_from_r_between_board_and_r_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_l_cam))
@@ -231,7 +222,7 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    while time.time() - start <= 50:
+    while time.time() - start <= 60:
         ret, frame = cam.read()
 
         l, r = split_camera_feed(frame)
@@ -252,15 +243,18 @@ if __name__ == '__main__':
 
             cv2.rectangle(r, (x_1, y_1), (x_2, y_2), (0, 255, 0), 2)
             depth_cms = r_depths[i]
-            depth_meters = '-'
+            depth_text = ''
             if depth_cms == '-':
-                pass
+                depth_text = '-'
+            elif depth_cms == 'far away':
+                depth_text = 'far away'
             elif depth_cms < 0:
-                depth_meters = '0'
+                depth_text = '0 m'
             else:
                 depth_meters = depth_cms / 100
-                depth_meters = f'{depth_meters:.1f}'
-            cv2.putText(r, f'{num_to_name[int(c)]} {depth_meters} m', (x_1, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+                depth_text = f'{depth_meters:.1f} m'
+
+            cv2.putText(r, f'{num_to_name[int(c)]} {depth_text}', (x_1, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
         cv2.imshow('', r)
         cv2.waitKey(1)

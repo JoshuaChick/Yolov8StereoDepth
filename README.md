@@ -26,3 +26,11 @@ Now you can work out angles from base of cameras to centres of those objects. An
 - To account for multiple of same object, pairs of the same object will be decided based on similarity of height of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
 - When an object is detected in the right of right camera (which we will use as our base image), it is provable the object, in the left camera, must be to the right of the vertical center line.
 - Depths of objects will be measured from right camera.
+
+# Run
+Note: you must have the specified camera. If you don't you will need to edit the software yourself. Please install any necessary packages.
+'''
+git clone https://github.com/JoshuaChick/Yolov8StereoDepth
+cd Yolov8StereoDepth
+python script.py
+'''
