@@ -1,5 +1,5 @@
 # Run
-Note: you must have the specified camera. If you don't you will need to edit the software yourself. Please install any necessary packages.
+Note: you must have this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1). If you don't you will need to edit the software yourself. Please install any necessary packages.
 ```
 git clone https://github.com/JoshuaChick/Yolov8StereoDepth
 cd Yolov8StereoDepth
