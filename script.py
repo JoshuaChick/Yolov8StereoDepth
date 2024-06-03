@@ -76,7 +76,7 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
             if l_class_num != r_class_num or l_idx in left_object_indexes_already_paired:
                 continue
             else:
-                l_xyxy = left_boxes.xywh[l_idx]
+                l_xyxy = left_boxes.xyxy[l_idx]
                 l_y_coord = l_xyxy[1]
                 if most_recent_y_abs_diff == -1:
                     most_recent_y_abs_diff = abs(r_y_coord - l_y_coord)
@@ -142,8 +142,8 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
     # if the angle is very small or negative, I will assume above angle measurements were slightly off and set it to 1
-    if angle_at_obj < 1:
-        angle_at_obj = 1
+    if angle_at_obj < 0.1:
+        angle_at_obj = 0.1
 
     # this angle is the los from the flat horizontal line passing through the middle of the right image (doesn't matter if positive or negative)
     angle_of_obj_btwn_horizon_los_r_cam = 0
@@ -160,7 +160,9 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     # x goes across camera, y goes up camera, z plane goes into camera. x z only means line to object w/o accounting for
     # drop or elevation (i.e., no y plane)
     # 1. object lies on vertical centre line of left camera
+    print(obj_centre_x_l)
     if obj_centre_x_l == centre_x_of_cam:
+        print(1)
         if obj_centre_x_r >= centre_x_of_cam:
             # this means that it was wrong object, you can do the geometry if you want
             return '-'
@@ -175,6 +177,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 2. object lies on v. centre line of right camera
     elif obj_centre_x_r == centre_x_of_cam:
+        print(2)
         if obj_centre_x_l <= centre_x_of_cam:
             # this means that it was wrong object, you can do the geometry if you want
             return '-'
@@ -188,6 +191,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 3. object lies between v. centres of left and right cameras
     elif obj_centre_x_r < centre_x_of_cam and obj_centre_x_l > centre_x_of_cam:
+        print(3)
         line_from_r_between_board_and_r_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_l_cam))
         x_z_only_line_from_right = line_from_r_between_board_and_r_los / if_zero_return_epsilon(math.sin(math.radians(angle_at_obj)))
         return x_z_only_line_from_right / if_zero_return_epsilon(math.cos(math.radians(angle_of_obj_btwn_horizon_los_r_cam)))
@@ -196,6 +200,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 4. object lies left of v. centre of left camera (and hence should be left of centre of right)
     elif obj_centre_x_l < centre_x_of_cam:
+        print(4)
         if obj_centre_x_r > centre_x_of_cam:
             return '-'
         line_from_l_between_board_and_l_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_r_cam))
@@ -208,6 +213,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     # 5. object lies right of v. centre of right camera (and hence should be right of centre of left)
     elif obj_centre_x_r > centre_x_of_cam:
+        print(5)
         if obj_centre_x_l < centre_x_of_cam:
             return '-'
         line_from_r_between_board_and_r_los = DISTANCE_BETWEEN_CAMERAS * math.sin(math.radians(angle_of_obj_btwn_board_los_l_cam))
