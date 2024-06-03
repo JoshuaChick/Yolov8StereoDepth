@@ -17,7 +17,7 @@ for key in num_to_name:
     name_to_num[num_to_name[key]] = key
 
 # camera fov in degrees, for horizontal and vertical, max should be 180
-CAMERA_FOV_X = 90
+CAMERA_FOV_X = 120
 CAMERA_FOV_Y = 60
 # distance between cameras, cms
 DISTANCE_BETWEEN_CAMERAS = 6
@@ -93,10 +93,10 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
             list_right_object_depths.append('-')
         else:
             # right_centre_x
-            r_c_x = int(r_xyxy[0] + r_xyxy[2] / 2)
-            r_c_y = int(r_xyxy[1] + r_xyxy[3] / 2)
-            l_c_x = int(l_xyxy[0] + l_xyxy[2] / 2)
-            l_c_y = int(l_xyxy[1] + l_xyxy[3] / 2)
+            r_c_x = int((r_xyxy[0] + r_xyxy[2]) / 2)
+            r_c_y = int((r_xyxy[1] + r_xyxy[3]) / 2)
+            l_c_x = int((l_xyxy[0] + l_xyxy[2]) / 2)
+            l_c_y = int((l_xyxy[1] + l_xyxy[3]) / 2)
 
             if r_class_num == 0:
                 print(f'r({r_c_x}, {r_c_y}) l({l_c_x}, {l_c_y})')
@@ -141,6 +141,9 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     angle_of_obj_btwn_board_los_r_cam = int((obj_centre_x_r / width_img) * CAMERA_FOV_X) + angle_to_start_of_fov_x
 
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
+    # if the angle is very small or negative, I will assume above angle measurements were slightly off and set it to 1
+    if angle_at_obj < 1:
+        angle_at_obj = 1
 
     # this angle is the los from the flat horizontal line passing through the middle of the right image (doesn't matter if positive or negative)
     angle_of_obj_btwn_horizon_los_r_cam = 0
@@ -149,7 +152,7 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     elif obj_centre_y_r > centre_y_of_cam:
         angle_of_obj_btwn_horizon_los_r_cam = int((obj_centre_y_r / height_img) * CAMERA_FOV_Y) + angle_to_start_of_fov_y - 90
     else:
-        angle_of_obj_btwn_horizon_los_r_cam = 90 - int((obj_centre_y_r / height_img) * CAMERA_FOV_Y) + angle_to_start_of_fov_y
+        angle_of_obj_btwn_horizon_los_r_cam = 90 - (int((obj_centre_y_r / height_img) * CAMERA_FOV_Y) + angle_to_start_of_fov_y)
 
 
 
