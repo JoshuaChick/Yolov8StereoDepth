@@ -29,8 +29,8 @@ Now you can work out angles from base of cameras to centres of those objects. An
 
 # Run
 Note: you must have the specified camera. If you don't you will need to edit the software yourself. Please install any necessary packages.
-'''
+```
 git clone https://github.com/JoshuaChick/Yolov8StereoDepth
 cd Yolov8StereoDepth
 python script.py
-'''
+```
