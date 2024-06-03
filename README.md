@@ -35,4 +35,5 @@ cd Yolov8StereoDepth
 python script.py
 ```
 Will give you a live video with labels and depths.
+
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/yoloWithDepths.png?raw=true)
