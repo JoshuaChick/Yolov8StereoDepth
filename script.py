@@ -1,5 +1,4 @@
 import math
-
 import torch
 import cv2
 import time
@@ -252,7 +251,7 @@ if __name__ == '__main__':
                 depth_text = '0 m'
             else:
                 depth_meters = depth_cms / 100
-                depth_text = f'{depth_meters:.1f} m'
+                depth_text = f'{depth_meters:.2f} m'
 
             cv2.putText(r, f'{num_to_name[int(c)]} {depth_text}', (x_1, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
