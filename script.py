@@ -137,8 +137,10 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
 
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
 
-    if angle_at_obj < 1:
+    if 0 <= angle_at_obj < 1:
         return 'far away'
+    elif angle_at_obj < 0:
+        return '-'
 
     # this angle is the los from the flat horizontal line passing through the middle of the right image (doesn't matter if positive or negative)
     angle_of_obj_btwn_horizon_los_r_cam = 0
