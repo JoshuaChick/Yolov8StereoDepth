@@ -3,7 +3,6 @@ import torch
 import cv2
 import time
 from ultralytics import YOLO
-import sys
 
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
