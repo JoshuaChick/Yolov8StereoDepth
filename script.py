@@ -137,8 +137,8 @@ def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_
     angle_of_obj_btwn_board_los_r_cam = int((obj_centre_x_r / width_img) * CAMERA_FOV_X) + angle_to_start_of_fov_x
 
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
-    # if the angle is very small or negative, I will assume above angle measurements were slightly off and set it to 1
-    if angle_at_obj < 0.1:
+
+    if angle_at_obj < 1:
         return 'far away'
 
     # this angle is the los from the flat horizontal line passing through the middle of the right image (doesn't matter if positive or negative)
@@ -243,10 +243,8 @@ if __name__ == '__main__':
             cv2.rectangle(r, (x_1, y_1), (x_2, y_2), (0, 255, 0), 2)
             depth_cms = r_depths[i]
             depth_text = ''
-            if depth_cms == '-':
-                depth_text = '-'
-            elif depth_cms == 'far away':
-                depth_text = 'far away'
+            if isinstance(depth_cms, str):
+                depth_text = depth_cms
             elif depth_cms < 0:
                 depth_text = '0 m'
             else:
