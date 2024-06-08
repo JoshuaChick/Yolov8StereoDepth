@@ -233,7 +233,14 @@ if __name__ == '__main__':
 
         r_depths = determine_depths(l, l_results, r, r_results)
 
+        # displaying bounding boxes
         for i, c in enumerate(r_boxes.cls):
+            depth_cms = r_depths[i]
+
+            # if it couldn't get depth will not display bounding box
+            if depth_cms == '-':
+                continue
+
             xyxy = r_boxes.xyxy[i]
 
             x_1 = int(xyxy[0])
@@ -242,9 +249,10 @@ if __name__ == '__main__':
             y_2 = int(xyxy[3])
 
             cv2.rectangle(r, (x_1, y_1), (x_2, y_2), (0, 255, 0), 2)
-            depth_cms = r_depths[i]
+
             depth_text = ''
-            if isinstance(depth_cms, str):
+
+            if depth_cms == 'far away':
                 depth_text = depth_cms
             elif depth_cms < 0:
                 depth_text = '0 m'
