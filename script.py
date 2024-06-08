@@ -262,7 +262,10 @@ if __name__ == '__main__':
                 depth_meters = depth_cms / 100
                 depth_text = f'{depth_meters:.2f} m'
 
-            cv2.putText(r, f'{num_to_name[int(c)]} {depth_text}', (x_1, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+            if y_1 < 30:
+                cv2.putText(r, f'{num_to_name[int(c)]} {depth_text}', (x_1 + 10, y_1 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            else:
+                cv2.putText(r, f'{num_to_name[int(c)]} {depth_text}', (x_1 + 10, y_1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
         cv2.imshow('', r)
         cv2.waitKey(1)
