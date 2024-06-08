@@ -80,7 +80,7 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
                     most_recent_y_abs_diff = abs(r_y_coord - l_y_coord)
                     l_index_of_most_similar_y = l_idx
                 else:
-                    # walrus operator diff gets assigned to ycoord - ycoord and returns itself for comparison
+                    # walrus operator diff gets assigned to abs(ycoord - ycoord) and returns itself for comparison
                     if (diff := abs(r_y_coord - l_y_coord)) < most_recent_y_abs_diff:
                         most_recent_y_abs_diff = diff
                         l_index_of_most_similar_y = l_idx
@@ -90,6 +90,8 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
         if l_index_of_most_similar_y == -1:
             list_right_object_depths.append('-')
         else:
+            # gets left xyxy coords of best match
+            l_xyxy = left_boxes.xyxy[l_index_of_most_similar_y]
             # right_centre_x
             r_c_x = int((r_xyxy[0] + r_xyxy[2]) / 2)
             r_c_y = int((r_xyxy[1] + r_xyxy[3]) / 2)
@@ -222,7 +224,7 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    while time.time() - start <= 60:
+    while time.time() - start <= 120:
         ret, frame = cam.read()
 
         l, r = split_camera_feed(frame)
