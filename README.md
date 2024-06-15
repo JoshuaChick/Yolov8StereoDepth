@@ -1,6 +1,6 @@
 # Run
 Notes: 
-- You must have this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1). If you don't you will need to edit the software yourself. Please install any necessary packages.
+- You must have this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1). If you don't you may need to edit the software yourself. Please install any necessary packages.
 - If you have multiple cameras please ensure the correct camera is being used by the program. If you think the wrong one is being selected go to the line with ```cam = cv2.VideoCapture(0)``` in ```script.py``` and increment the number until the correct camera is selected.
 ```
 git clone https://github.com/JoshuaChick/Yolov8StereoDepth
