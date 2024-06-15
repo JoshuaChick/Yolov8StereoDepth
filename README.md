@@ -7,6 +7,8 @@ python script.py
 ```
 Will give you a live video with labels and depths.
 
+Note: if you have multiple cameras please ensure the right camera is being used by the program. If you think the wrong one is selected go to the line with ```cam = cv2.VideoCapture(0)``` and increment the number until the right camera is selected.
+
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/yoloWithDepths.png?raw=true)
 
 # The Goal
