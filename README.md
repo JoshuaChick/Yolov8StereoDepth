@@ -9,7 +9,7 @@ Will give you a live video with labels and depths.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/yoloWithDepths.png?raw=true)
 
-Note: if you have multiple cameras please ensure the right camera is being used by the program. If you think the wrong one is selected go to the line with ```cam = cv2.VideoCapture(0)``` in ```script.py``` and increment the number until the right camera is selected.
+Note: if you have multiple cameras please ensure the correct camera is being used by the program. If you think the wrong one is selected go to the line with ```cam = cv2.VideoCapture(0)``` in ```script.py``` and increment the number until the right camera is selected.
 
 # The Goal
 Get this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1) to do metric, stereo depth, on YOLOv8 output.
