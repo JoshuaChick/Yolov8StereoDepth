@@ -8,7 +8,7 @@ git clone https://github.com/JoshuaChick/Yolov8StereoDepth
 cd Yolov8StereoDepth
 python script.py
 ```
-Will give you a live video with labels and depths.
+Will give you a live video with labels and depths (video below is live and is ~25fps on RTX4060 ti 16GB).
 
 https://github.com/user-attachments/assets/f494a8e4-23da-49a2-88b2-7d7e281ef7df
 
