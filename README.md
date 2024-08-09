@@ -36,6 +36,10 @@ Work out angles from base of cameras to centres of those objects. And using the 
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/stereoDepthMaths.png?raw=true)
 
+## Technicalities
+- To account for multiple of same object, pairs of the same object are decided based on similarity of y-coord of top left corner of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
+- Depths of objects are measured from right camera.
+
 # Editing the software
 If you want to edit the software please update CAMERA_FOV_X, CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS. You may need to experiment with these if results are not satisfactory, as things like fish eye lenses may cause problems. 
 
@@ -44,8 +48,4 @@ If you want to edit the software please update CAMERA_FOV_X, CAMERA_FOV_Y, and D
 Also ensure that the l and r variables are being set to the left and right image respectively.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/landrImagesCode.png?raw=true)
-
-## Technicalities
-- To account for multiple of same object, pairs of the same object are decided based on similarity of y-coord of top left corner of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
-- Depths of objects are measured from right camera.
 
