@@ -10,13 +10,12 @@ python script.py
 ```
 Will give you a live video with labels and depths.
 
-<img width="403" alt="yoloWithDepths" src="https://github.com/user-attachments/assets/a0dd8b37-f6ce-41b5-a22c-3a4fba949b12">
+https://github.com/user-attachments/assets/f494a8e4-23da-49a2-88b2-7d7e281ef7df
 
 # Overview
 Got this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1) to do metric, stereo depth, on YOLOv8 output.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/stereocam.jpg?raw=true)
-[![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/Yolov8StereoDepth.mp4?raw=true)
 
 # How It Works
 The images from both cameras are gathered.
