@@ -41,7 +41,7 @@ Work out angles from base of cameras to centres of those objects. And using the 
 - Depths of objects are measured from right camera.
 
 # Editing the software
-If you want to edit the software please update CAMERA_FOV_X, CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS. You may need to experiment with these if results are not satisfactory, as things like fish eye lenses may cause problems. 
+If you are using a different camera please update CAMERA_FOV_X, CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS. You may need to experiment with these if results are not satisfactory, as things like fish eye lenses may cause problems. 
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/HardCodedVariablesCameraFOVDistance.png?raw=true)
 
