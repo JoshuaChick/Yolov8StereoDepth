@@ -39,7 +39,11 @@ Work out angles from base of cameras to centres of those objects. And using the 
 # Editing the software
 If you want to edit the software please update CAMERA_FOV_X, CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS.
 
+![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/HardCodedVariablesCameraFOVDistance.png?raw=true)
+
 Also ensure that the l and r variables are being set to the left and right image respectively.
+
+![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/landrImagesCode.png?raw=true)
 
 ## Technicalities
 - To account for multiple of same object, pairs of the same object are decided based on similarity of y-coord of top left corner of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
