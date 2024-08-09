@@ -15,7 +15,9 @@ Will give you a live video with labels and depths.
 # Overview
 Got this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1) to do metric, stereo depth, on YOLOv8 output.
 
-![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/stereocam.jpg?raw=true)
+Here is a live video of the program running:
+
+<img width="403" alt="yoloWithDepths" src="https://github.com/user-attachments/assets/b055dc71-b3df-4b32-8cd2-c52010a193a2">
 
 # How It Works
 The images from both cameras are gathered.
