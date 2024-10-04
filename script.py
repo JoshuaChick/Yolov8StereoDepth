@@ -15,12 +15,13 @@ for key in num_to_name:
     name_to_num[num_to_name[key]] = key
 
 
-# resolution of the capture (assumes both left and right are combined into one capture)
-CAM_WIDTH = 2560
-CAM_HEIGHT = 960
-# camera fov in degrees, for horizontal and vertical, max should be 180
-CAMERA_FOV_X = 120
-CAMERA_FOV_Y = 60
+# resolution of the stereoscopic camera (assumes both left and right images are combined by the camera,
+# which is what most stereoscopic cameras will do)
+STEREO_CAM_WIDTH = 2560
+STEREO_CAM_HEIGHT = 960
+# camera fov in degrees, for horizontal and vertical, max should be 180.
+INDIVIDUAL_CAMERA_FOV_X = 120
+INDIVIDUAL_CAMERA_FOV_Y = 60
 # distance between cameras, cms
 DISTANCE_BETWEEN_CAMERAS = 6
 
@@ -122,22 +123,22 @@ def determine_depth(obj_center_coords_left_cam, obj_center_coords_right_cam):
     depth calculations in separate projects, as its parameters aren't for a YOLO specific object.
     """
     # width and height of either left or right image
-    width_img = CAM_WIDTH / 2
-    height_img = CAM_HEIGHT
+    width_img = STEREO_CAM_WIDTH / 2
+    height_img = STEREO_CAM_HEIGHT
 
     centre_x_of_cam = int(width_img / 2)
     centre_y_of_cam = int(height_img / 2)
 
-    angle_to_start_of_fov_x = 90 - int(CAMERA_FOV_X / 2)
-    angle_to_start_of_fov_y = 90 - int(CAMERA_FOV_Y / 2)
+    angle_to_start_of_fov_x = 90 - int(INDIVIDUAL_CAMERA_FOV_X / 2)
+    angle_to_start_of_fov_y = 90 - int(INDIVIDUAL_CAMERA_FOV_Y / 2)
 
     obj_centre_x_r = obj_center_coords_right_cam[0]
     obj_centre_y_r = obj_center_coords_right_cam[1]
     obj_centre_x_l = obj_center_coords_left_cam[0]
 
     # angle between board and line of sight to obj from left and right camera
-    angle_of_obj_btwn_board_los_l_cam = 180 - (int((obj_centre_x_l / width_img) * CAMERA_FOV_X) + angle_to_start_of_fov_x)
-    angle_of_obj_btwn_board_los_r_cam = int((obj_centre_x_r / width_img) * CAMERA_FOV_X) + angle_to_start_of_fov_x
+    angle_of_obj_btwn_board_los_l_cam = 180 - (int((obj_centre_x_l / width_img) * INDIVIDUAL_CAMERA_FOV_X) + angle_to_start_of_fov_x)
+    angle_of_obj_btwn_board_los_r_cam = int((obj_centre_x_r / width_img) * INDIVIDUAL_CAMERA_FOV_X) + angle_to_start_of_fov_x
 
     angle_at_obj = 180 - angle_of_obj_btwn_board_los_l_cam - angle_of_obj_btwn_board_los_r_cam
 
@@ -151,9 +152,9 @@ def determine_depth(obj_center_coords_left_cam, obj_center_coords_right_cam):
     if obj_centre_y_r == centre_y_of_cam:
         pass
     elif obj_centre_y_r > centre_y_of_cam:
-        angle_of_obj_btwn_horizon_los_r_cam = int((obj_centre_y_r / height_img) * CAMERA_FOV_Y) + angle_to_start_of_fov_y - 90
+        angle_of_obj_btwn_horizon_los_r_cam = int((obj_centre_y_r / height_img) * INDIVIDUAL_CAMERA_FOV_Y) + angle_to_start_of_fov_y - 90
     else:
-        angle_of_obj_btwn_horizon_los_r_cam = 90 - (int((obj_centre_y_r / height_img) * CAMERA_FOV_Y) + angle_to_start_of_fov_y)
+        angle_of_obj_btwn_horizon_los_r_cam = 90 - (int((obj_centre_y_r / height_img) * INDIVIDUAL_CAMERA_FOV_Y) + angle_to_start_of_fov_y)
 
 
 
@@ -221,8 +222,8 @@ if __name__ == '__main__':
     # lower three
     # cam = cv2.VideoCapture(0)
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cam.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_WIDTH)
-    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_HEIGHT)
+    cam.set(cv2.CAP_PROP_FRAME_WIDTH, STEREO_CAM_WIDTH)
+    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, STEREO_CAM_HEIGHT)
 
     start = time.time()
     
