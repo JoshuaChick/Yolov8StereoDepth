@@ -49,7 +49,7 @@ Update INDIVIDUAL_CAMERA_FOV_X, INDIVIDUAL_CAMERA_FOV_Y, and DISTANCE_BETWEEN_CA
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/HardCodedVariablesCameraFOVDistance.png?raw=true)
 
-If you are using two separate cameras ensure that the l and r variables are being set to the left and right image respectively. Then set the stereoscopic camera resolution, then set the fov's and distance between cameras.
+If you are using two separate cameras ensure that the l and r variables are being set to the left and right image respectively. Then set the stereoscopic camera resolution (as if they were combined side by side), then set the fov's and distance between cameras.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/landrImagesCode.png?raw=true)
 
