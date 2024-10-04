@@ -14,6 +14,10 @@ name_to_num = {}
 for key in num_to_name:
     name_to_num[num_to_name[key]] = key
 
+
+# resolution of the capture (assumes both left and right are combined into one capture)
+CAM_WIDTH = 2560
+CAM_HEIGHT = 960
 # camera fov in degrees, for horizontal and vertical, max should be 180
 CAMERA_FOV_X = 120
 CAMERA_FOV_Y = 60
@@ -39,7 +43,7 @@ def if_zero_return_epsilon(n):
         return n
 
 
-def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results):
+def determine_depths(left_yolo_results, right_yolo_results):
     """
     Determines depths of every object in right_img. Returns a list of depths, the order of which corresponds to the
     order of the right_yolo_results (e.g., if first depth is 1m and first object in results is person -> person is
@@ -100,9 +104,7 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
 
             list_right_object_depths.append(
                 determine_depth(
-                    left_img,
                     (l_c_x, l_c_y),
-                    right_img,
                     (r_c_x, r_c_y)
                 )
             )
@@ -113,15 +115,15 @@ def determine_depths(left_img, left_yolo_results, right_img, right_yolo_results)
     return list_right_object_depths
 
 
-def determine_depth(left_img, obj_center_coords_left_cam, right_img, obj_center_coords_right_cam):
+def determine_depth(obj_center_coords_left_cam, obj_center_coords_right_cam):
     """
     determine_depths(), once it has paired up bounding boxes between left and right, will use this function to calculate
     the depth for each individual object. I mainly included this function so others can copy-paste it if they want to do
     depth calculations in separate projects, as its parameters aren't for a YOLO specific object.
     """
-    # this program assumes same camera used for both views, so doesn't matter if left or right used here:
-    width_img = left_img.shape[1]
-    height_img = left_img.shape[0]
+    # width and height of either left or right image
+    width_img = CAM_WIDTH / 2
+    height_img = CAM_HEIGHT
 
     centre_x_of_cam = int(width_img / 2)
     centre_y_of_cam = int(height_img / 2)
@@ -219,11 +221,11 @@ if __name__ == '__main__':
     # lower three
     # cam = cv2.VideoCapture(0)
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cam.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
-    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
+    cam.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_WIDTH)
+    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_HEIGHT)
 
     start = time.time()
-
+    
     while time.time() - start <= 120:
         ret, frame = cam.read()
 
@@ -233,7 +235,7 @@ if __name__ == '__main__':
         r_results = model(r, verbose=False)
         r_boxes = r_results[0].boxes
 
-        r_depths = determine_depths(l, l_results, r, r_results)
+        r_depths = determine_depths(l_results, r_results)
 
         # displaying bounding boxes
         for i, c in enumerate(r_boxes.cls):
