@@ -41,11 +41,15 @@ Work out angles from base of cameras to centres of those objects. And using the 
 - Depths of objects are measured from right camera.
 
 # Editing the software
-If you are using a different camera please update CAMERA_FOV_X, CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS. You may need to experiment with these if results are not satisfactory, as things like fish eye lenses may cause problems. 
+Set the resolution of your stereoscopic camera. If you are using two different cameras please see the end of this section.
+
+![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/setResolution.png?raw=true)
+
+Update INDIVIDUAL_CAMERA_FOV_X, INDIVIDUAL_CAMERA_FOV_Y, and DISTANCE_BETWEEN_CAMERAS. These fov values are for the right and left cameras individually. You may need to experiment with these if results are not satisfactory, as things like fish eye lenses may cause problems. 
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/HardCodedVariablesCameraFOVDistance.png?raw=true)
 
-Also ensure that the l and r variables are being set to the left and right image respectively.
+If you are using two separate cameras ensure that the l and r variables are being set to the left and right image respectively. And set the stereoscopic camera resolution to be as if they were combined side by side.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/landrImagesCode.png?raw=true)
 
