@@ -39,6 +39,7 @@ Work out angles from base of cameras to centres of those objects. And using the 
 ## Technicalities
 - To account for multiple of same object, pairs of the same object are decided based on similarity of y-coord of top left corner of bounding box. (Going left to right will not work, you can look into this if you want (imagine something close and something far, etc...)).
 - Depths of objects are measured from right camera.
+- For the sake of keeping the program generalisable and simple (as opposed to gathering and incorporating extremely detailed measurements from the specific stereo camera I used), it only predicts the depth of objects approximately 2m or closer. Otherwise will usually just label their depth as 'far away'.
 
 # Editing the software
 Set the resolution of your stereoscopic camera.
