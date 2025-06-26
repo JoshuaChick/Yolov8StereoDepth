@@ -15,7 +15,7 @@ Notes:
 - I used this [camera](https://www.amazon.com/gp/product/B07R8LQKV4/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1) when making this project. If you don't have this camera you can easily [edit the software yourself](#editing-the-software) to suit your camera.
 - If you have multiple cameras please ensure the correct camera is being used by the program. If you think the wrong one is being selected go to the line with ```cam = cv2.VideoCapture(0)``` in ```script.py``` and increment the number until the correct camera is selected.
 
-Will give you a live video with labels and depths (video below is live and is ~25fps on RTX4060 ti 16GB).
+```script.py``` will give you a live video with labels and depths (video below is live and is ~25fps on RTX4060 ti 16GB).
 
 https://github.com/user-attachments/assets/f494a8e4-23da-49a2-88b2-7d7e281ef7df
 
