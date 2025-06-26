@@ -4,8 +4,14 @@ Notes:
 - If you have multiple cameras please ensure the correct camera is being used by the program. If you think the wrong one is being selected go to the line with ```cam = cv2.VideoCapture(0)``` in ```script.py``` and increment the number until the correct camera is selected.
 ```
 git clone https://github.com/JoshuaChick/Yolov8StereoDepth
+```
+```
 cd Yolov8StereoDepth
+```
+```
 pip3 install -r requirements.txt
+```
+```
 python script.py
 ```
 Will give you a live video with labels and depths (video below is live and is ~25fps on RTX4060 ti 16GB).
