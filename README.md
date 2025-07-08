@@ -48,6 +48,8 @@ Work out angles from base of cameras to centres of those objects. And using the 
 - Depths of objects are measured from right camera.
 
 # Editing the software
+In ```script.py```:
+
 Set the resolution of your stereoscopic camera.
 
 ![alt text](https://github.com/JoshuaChick/Yolov8StereoDepth/blob/main/ReadMeImages/setResolution.png?raw=true)
